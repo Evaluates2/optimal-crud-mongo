@@ -9,7 +9,7 @@ It is meant to be optimized for:
 ### ⚡️ Execution Speed
 Written in Rust with most optimized compiler settings and zero "virtual machine bloat" that exists with languages such as python, node, or go.
 
-### 💵 Scalability and Cost
+### 💵 Cost and Scalability
 This project packages the Rust server as AWS Lambda functions where you pay for _only_ the milliseconds or server time when your code is executing. As opposed to other architectures that involve running a server 24/7, serverless functions do not incur a cost when the system is not in use, and there is no more headache of configuring load balancing correctly.
 
 ### 📊 Large Amounts of Data
@@ -91,6 +91,19 @@ DELETE: `https://your_url/cats/123123123` where "123123123" is the document `_id
 ### LAKE - Moving Old Cats To Data Lake
 POST: `https://your_url/cats/move-stale` Copies docs older than X days (default 30) to mongo data lake and deletes them from the db collection.
 
+
+## Unit Testing
+
+This project has 100% code coverage and great assertions!
+
+It uses a mock mongo server so that you can run the tests without calling out to an external database _and_ without having to directly mock the functions in the external mongo crate.
+
+
+## E2e Testing
+
+This project also has some end-to-end tests that ping each endpoint and fail if responses are not fast enough. 
+
+Uses the [artillery] project and defines e2e tests in yaml.
 
 
 ## Benchmarks
