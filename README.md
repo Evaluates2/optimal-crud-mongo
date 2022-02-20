@@ -1,4 +1,4 @@
-# mongo-greatest-CRUD-in-all-the-land
+# Optimal CRUD Mongo
 
 ## Goals of This Project
 
@@ -76,7 +76,10 @@ GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` f
 #### READ - Getting Cats
 GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the cursor document. Returns up to 10 cats after the cursor doc.
 
+
+By default these get the full cat document. You can optionally pass a body with these requests which is used in the mongo "find" call the [projection](https://docs.mongodb.com/manual/reference/method/db.collection.find/#projection) object, allowing you to call for a subset of the cat document (by specifying either the fields you want included or excluded in the data to get).
  
+
 #### UPDATE - Updating A Cat
 POST: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the document to update. Takes an object of fields to update and leaves existing fields on the document.
 
