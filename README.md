@@ -65,30 +65,30 @@ We usually recommend using the plural form of the resource for which you are bui
 For example, if each document in your collection represents a "cat", then the url endpoint should be "cats".
 
 
-#### CREATE - Inserting a New Cat
+### CREATE - Inserting a New Cat
 POST to: `https://your_url/cats` with cat details
 
 
-#### READ - Getting An Individual Cat
+### READ - Getting An Individual Cat
 GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the cat object to get.
 
 
-#### READ - Getting Cats
+### READ - Getting Cats
 GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the cursor document. Returns up to 10 cats after the cursor doc.
 
 
 By default these get the full cat document. You can optionally pass a body with these requests which is used in the mongo "find" call the [projection](https://docs.mongodb.com/manual/reference/method/db.collection.find/#projection) object, allowing you to call for a subset of the cat document (by specifying either the fields you want included or excluded in the data to get).
  
 
-#### UPDATE - Updating A Cat
+### UPDATE - Updating A Cat
 POST: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the document to update. Takes an object of fields to update and leaves existing fields on the document.
 
 
-#### DELETE - Deleting A Cat
+### DELETE - Deleting A Cat
 DELETE: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the document to delete.
 
 
-#### LAKE - Moving Old Cats To Data Lake
+### LAKE - Moving Old Cats To Data Lake
 POST: `https://your_url/cats/move-stale` Copies docs older than X days (default 30) to mongo data lake and deletes them from the db collection.
 
 
