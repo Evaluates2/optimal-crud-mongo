@@ -2,9 +2,9 @@
 
 ## Goals of This Project
 
-This project is meant to be a production-ready REST API backend that exposes CRUD operations on a MongoDB collection.
+This is meant to be the most __efficient__, __scalable__, and __fast__ production-ready serverless REST API backend which provides CRUD operations for a MongoDB collection!!
 
-It it meant to be optimized for:
+It is meant to be optimized for:
 
 ### ⚡ Execution Speed
 Written in Rust with most optimized compiler settings and zero "virtual machine bloat" that exists with languages such as python, node, or go.
@@ -20,6 +20,8 @@ This project packages the Rust server as AWS Lambda functions where you pay for 
 
 
 ## Usage
+
+This is a Rust project. Please first install `cargo` and `serverless`.
 
 Running Tests:
 ```
@@ -41,16 +43,26 @@ Note: You will need to first configure your aws cli before deploying:
 aws configure
 ```
 
+## Customize For Your Data
+Modify constants defined in .env to your liking.
 
-## Included Functions
+You may also want to update your resource name.
 
+This must be done manually at the current time...
+
+Do a project find-and-replace for these things:
+- cat -> my_new_resource_name
+- Cat -> MyNewResourceName
+- CAT -> MY_NEW_RESOURCE_NAME
+
+You can also add / remove fields on the `Cat` struct defined in: `./src/cat/cat.model.rs`
 
 
 ## REST Naming Conventions
 
 We usually recommend using the plural form of the resource for which you are building this CRUD API.
 
-For example, if each document in your collection represents a "cat", then the url endpoint would be "cats".
+For example, if each document in your collection represents a "cat", then the url endpoint should be "cats".
 
 
 #### CREATE - Inserting a New Cat
