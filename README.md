@@ -6,13 +6,13 @@ This is meant to be the most __efficient__, __scalable__, and __fast__ productio
 
 It is meant to be optimized for:
 
-### ⚡ Execution Speed
+### ⚡️ Execution Speed
 Written in Rust with most optimized compiler settings and zero "virtual machine bloat" that exists with languages such as python, node, or go.
 
 ### 💵 Scalability and Cost
 This project packages the Rust server as AWS Lambda functions where you pay for _only_ the milliseconds or server time when your code is executing. As opposed to other architectures that involve running a server 24/7, serverless functions do not incur a cost when the system is not in use, and there is no more headache of configuring load balancing correctly.
 
-### Large Amounts of Data
+### 📊 Large Amounts of Data
 
 - Rather than a "get all" method that, this project provides a "get single" and "get paginated list" which uses cursor pagination 
 
