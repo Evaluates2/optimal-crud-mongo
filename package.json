@@ -1,0 +1,13 @@
+{
+  "name": "optimal-crud-mongo",
+  "scripts": {
+    "start": "serverless offine",
+    "test": "cargo test",
+    "test-e2e": "artillery run ./e2e_load_tests/run_all_e2e_tests.yml",
+    "deploy:": "serverless deploy -e ci"
+  },
+  "devDependencies": {
+    "serverless": "^1.74.1",
+    "serverless-rust": "^0.3.8"
+  }
+}
