@@ -1,163 +1,116 @@
-# serverless AWS Rust HTTP template
+# Optimal CRUD Mongo
 
-A sample template for bootstraping [Rustlang AWS Lambda](https://github.com/awslabs/aws-lambda-rust-runtime/) HTTP applications with ⚡ serverless framework ⚡.
+## Goals of This Project
 
-## ✨ features
+This is meant to be the most __efficient__, __scalable__, and __fast__ production-ready serverless REST API backend which provides CRUD operations for a MongoDB collection!!
 
-- 🦀 Build Rustlang applications targeting AWS Lambda with ease
-- 🛵 Continuous integration testing with GitHub Actions
-- 🚀 Continuous deployment with GitHub Actions
-- 🧪 Getting started tests
+It is meant to be optimized for:
 
-## 📦 install
+### ⚡️ Execution Speed
+Written in Rust with most optimized compiler settings and zero "virtual machine bloat" that exists with languages such as python, node, or go.
 
-Install the [serverless framework](https://www.serverless.com/framework/docs/getting-started/) cli.
+### 💵 Cost and Scalability
+This project packages the Rust server as AWS Lambda functions where you pay for _only_ the milliseconds or server time when your code is executing. As opposed to other architectures that involve running a server 24/7, serverless functions do not incur a cost when the system is not in use, and there is no more headache of configuring load balancing correctly.
 
-Then then run the following in your terminal
+### 📊 Large Amounts of Data
 
-```bash
-$ npx serverless install \
-  --url https://github.com/softprops/serverless-aws-rust-http \
-  --name my-new-api
+- Rather than a "get all" method that, this project provides a "get single" and "get paginated list" which uses cursor pagination 
+
+- Includes a "move data to lake" to lake function which offloads old documents from the mongo "application database" over to a mongo "data lake" for long-term storage and analytics purposes.
+
+
+## Usage
+
+This is a Rust project. Please first install `cargo` and `serverless`.
+
+Running Tests:
+```
+cargo test
 ```
 
-This will download the source of a sample Rustlang application and unpack it as a new service named
-"my-new-api" in a directory called "my-new-api"
-
-## 🧙 how to be a wizard
-
-Assuming you have [aws credentials with appropriate deployment permissions configured](https://serverless.com/framework/docs/providers/aws/guide/credentials/)
-(if you already use any existing AWS tooling installed you likely already have this configured), you can impress your friends by creating a project
-that is _born_ in a production environment.
-
-```bash
-$ npx serverless install \
-  --url https://github.com/softprops/serverless-aws-rust-http \
-  --name my-new-api \
-  && cd my-new-api \
-  && npm i \
-  && npx serverless deploy
+Running Locally (Note - not working for me...)
+```
+sls invoke local -f function_name
 ```
 
-`npm i` will make sure npm dependencies are installed. This only needs run once.
-The first time you run `npx serverless deploy` it will pull down and compile the base set
-of dependencies and your application. Unless the dependencies change afterwards,
-this should only happen once, resulting in an out of the box rapid deployment
-cycle.
-
-## 🛵 continuous integration and deployment
-
-This template includes an example [GitHub actions](https://travis-ci.org/) [configuration file](.github/workflows/main.yml) which can unlock a virtuous cycle of continuous integration and deployment
-( i.e all tests are run on prs and every push to master results in a deployment ).
-
-GitHub actions is managed simply by the presence of a file checked into your repository. To set up GitHub Actions to deploy to AWS you'll need to do a few things
-
-Firstly, version control your source. [Github](https://github.com/) is free for opensource.
-
-```bash
-$ git init
-$ git remote add origin git@github.com:{username}/{my-new-service}.git
+Deploying:
+```
+sls deploy
 ```
 
-Store a `AWS_ACCESS_KEY_ID` `AWS_SECRET_ACCESS_KEY` used for aws deployment in your repositories secrets https://github.com/{username}/{my-new-service}/settings/secrets
-
-Add your changes to git and push them to GitHub.
-
-Finally, open https://github.com/{username}/{my-new-service}/actions in your browser and grab a bucket of popcorn 🍿
-
-## 🔫 function triggering
-
-With your function deployed you can now start triggering it using `serverless` framework directly or
-the AWS integration you've configured to trigger it on your behalf
-
-Copy this sample apigateway request into a file called payload.json
-
-```json
-{
-  "path": "/test/hello",
-  "headers": {
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Encoding": "gzip, deflate, lzma, sdch, br",
-    "Accept-Language": "en-US,en;q=0.8",
-    "CloudFront-Forwarded-Proto": "https",
-    "CloudFront-Is-Desktop-Viewer": "true",
-    "CloudFront-Is-Mobile-Viewer": "false",
-    "CloudFront-Is-SmartTV-Viewer": "false",
-    "CloudFront-Is-Tablet-Viewer": "false",
-    "CloudFront-Viewer-Country": "US",
-    "Host": "wt6mne2s9k.execute-api.us-west-2.amazonaws.com",
-    "Upgrade-Insecure-Requests": "1",
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48",
-    "Via": "1.1 fb7cca60f0ecd82ce07790c9c5eef16c.cloudfront.net (CloudFront)",
-    "X-Amz-Cf-Id": "nBsWBOrSHMgnaROZJK1wGCZ9PcRcSpq_oSXZNQwQ10OTZL4cimZo3g==",
-    "X-Forwarded-For": "192.168.100.1, 192.168.1.1",
-    "X-Forwarded-Port": "443",
-    "X-Forwarded-Proto": "https"
-  },
-  "pathParameters": {
-    "proxy": "hello"
-  },
-  "requestContext": {
-    "accountId": "123456789012",
-    "resourceId": "us4z18",
-    "stage": "test",
-    "requestId": "41b45ea3-70b5-11e6-b7bd-69b5aaebc7d9",
-    "identity": {
-      "cognitoIdentityPoolId": "",
-      "accountId": "",
-      "cognitoIdentityId": "",
-      "caller": "",
-      "apiKey": "",
-      "sourceIp": "192.168.100.1",
-      "cognitoAuthenticationType": "",
-      "cognitoAuthenticationProvider": "",
-      "userArn": "",
-      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.82 Safari/537.36 OPR/39.0.2256.48",
-      "user": ""
-    },
-    "resourcePath": "/{proxy+}",
-    "httpMethod": "GET",
-    "apiId": "wt6mne2s9k"
-  },
-  "resource": "/{proxy+}",
-  "httpMethod": "GET",
-  "queryStringParameters": {
-    "name": "me"
-  },
-  "stageVariables": {
-    "stageVarName": "stageVarValue"
-  }
-}
+Note: You will need to first configure your aws cli before deploying:
+```
+aws configure
 ```
 
-Then invoke your function with a synthetic request
+## Customize For Your Data
+Modify constants defined in .env to your liking.
 
-```sh
-$ npx serverless invoke -f hello -d "$(cat payload.json)"
-```
+You may also want to update your resource name.
 
-## 🔬 logs
+This must be done manually at the current time...
 
-With your function deployed you can now tail it's logs right from your project
+Do a project find-and-replace for these things:
+- cat -> my_new_resource_name
+- Cat -> MyNewResourceName
+- CAT -> MY_NEW_RESOURCE_NAME
 
-```sh
-$ npx serverless logs -f hello
-```
+You can also add / remove fields on the `Cat` struct defined in: `./src/cat/cat.model.rs`
 
-## 👴 retiring
 
-Good code should be easily replaceable. Good code is should also be easily disposable. Retiring applications should be as easy as creating and deploying them. The dual of `serverless deploy` is `serverless remove`. Use this for retiring services and cleaning up resources.
+## REST Naming Conventions
 
-```bash
-$ npx serverless remove
-```
+We usually recommend using the plural form of the resource for which you are building this CRUD API.
 
-## ℹ️ additional information
+For example, if each document in your collection represents a "cat", then the url endpoint should be "cats".
 
-- See the [serverless-rust plugin's documentation](https://github.com/softprops/serverless-rust) for more information on plugin usage.
 
-- See the [aws rust runtime's documentation](https://github.com/awslabs/aws-lambda-rust-runtime) for more information on writing Rustlang lambda functions
+### CREATE - Inserting a New Cat
+POST to: `https://your_url/cats` with cat details
 
-## 👯 contributing
 
-This template's intent is to set a minimal baseline for getting engineers up an running with a set of repeatable best practices. See something you'd like in this template that would help others? Feel free to [open a new github issue](https://github.com/softprops/serverless-aws-rust-http/issues/new). Pull requests are also welcome.
+### READ - Getting An Individual Cat
+GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the cat object to get.
+
+
+### READ - Getting Cats
+GET: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the cursor document. Returns up to 10 cats after the cursor doc.
+
+
+By default these get the full cat document. You can optionally pass a body with these requests which is used in the mongo "find" call the [projection](https://docs.mongodb.com/manual/reference/method/db.collection.find/#projection) object, allowing you to call for a subset of the cat document (by specifying either the fields you want included or excluded in the data to get).
+ 
+
+### UPDATE - Updating A Cat
+POST: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the document to update. Takes an object of fields to update and leaves existing fields on the document.
+
+
+### DELETE - Deleting A Cat
+DELETE: `https://your_url/cats/123123123` where "123123123" is the document `_id` for the document to delete.
+
+
+### LAKE - Moving Old Cats To Data Lake
+POST: `https://your_url/cats/move-stale` Copies docs older than X days (default 30) to mongo data lake and deletes them from the db collection.
+
+
+## Unit Testing
+
+This project has 100% code coverage and great assertions!
+
+It uses a mock mongo server so that you can run the tests without calling out to an external database _and_ without having to directly mock the functions in the external mongo crate.
+
+
+## E2e Testing
+
+This project also has some end-to-end tests that ping each endpoint and fail if responses are not fast enough. 
+
+Uses the [artillery] project and defines e2e tests in yaml.
+
+
+## Benchmarks
+
+// TODO - get some real data for these functions!!
+
+
+## Contributing
+
+Feel free to open issues / PRs if you have ideas on how to improve this project
